@@ -1,8 +1,8 @@
 .idea/
 .DS_Store
 
-country_films_crawler/*.pyc
-country_films_crawler/spiders/*.pyc
+country_films_crawler/country_films_crawler/*.pyc
+country_films_crawler/country_films_crawler/spiders/*.pyc
 
-country_films_crawler/__pycache__/
-country_films_crawler/spiders/__pycache__/
+country_films_crawler/country_films_crawler/__pycache__/
+country_films_crawler/country_films_crawler/spiders/__pycache__/
