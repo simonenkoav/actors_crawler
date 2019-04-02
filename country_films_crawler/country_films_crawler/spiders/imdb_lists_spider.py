@@ -1,6 +1,6 @@
 import scrapy
 from html.parser import HTMLParser
-import functools
+from country_films_crawler.utils import load_list
 
 
 class PhotoPageHTMLParser(HTMLParser):
@@ -20,7 +20,7 @@ class ImdbListsSpider(scrapy.Spider):
 
     gained_actors = []
 
-    urls = ['https://www.imdb.com/list/ls077130929/']
+    urls = set(load_list('../data/imdbs_lists_urls.txt'))
 
     photo_page_html_parser = PhotoPageHTMLParser()
 
