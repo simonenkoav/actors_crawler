@@ -1,6 +1,6 @@
 import scrapy
 from html.parser import HTMLParser
-from country_films_crawler.utils import load_list
+from country_films_crawler.utils import *
 
 
 class PhotoPageHTMLParser(HTMLParser):
@@ -18,18 +18,19 @@ class ImdbListsSpider(scrapy.Spider):
 
     gained_data = []
 
-    gained_actors = []
+    gained_actors = load_list('../data/imdb_gained_actors.txt')
 
-    urls = set(load_list('../data/imdbs_lists_urls.txt'))
+    urls = set(load_list('../data/scrap/indian_lists_urls.txt'))
+
+    save_path = '../data/download/indian_images_urls.txt'
 
     photo_page_html_parser = PhotoPageHTMLParser()
 
     def save_data(self):
         self.gained_data = list(set(self.gained_data))
         self.log('GAINED %d' % len(self.gained_data))
-        with open('../data/black_lists_imdb_data.txt', 'w') as fd:
-            for url in self.gained_data:
-                fd.write(url + '\n')
+        save_list(self.gained_data, save_path)
+        save_list(self.gained_actors, '../data/imdb_gained_actors.txt')
 
     def start_requests(self):
         for url in self.urls:
