@@ -7,11 +7,11 @@ from urllib.parse import urljoin
 class FixAvatarSpider(scrapy.Spider):
     name = "fix_avatars"
 
-    # main_url = []  # oops :)
+    main_url = [] # oops :)
 
     avatars_data = []
 
-    avatars_save_path = '../data/download/fix_black_avatars_images.txt'
+    avatars_save_path = '../data/download/fix_hair_brown_dark_avatars_images.txt'
 
     credentials = dict(load_tuples_list('../data/fix_credentials.txt'))
 
@@ -52,6 +52,7 @@ class FixAvatarSpider(scrapy.Spider):
         img_url = response.css('img.imgorig::attr(src)').get()
         person_name = response.css('#banner0 div.cbox-nav div.cbox-nav2 div.label h1.posl a::text').get()
         self.avatars_data.append((person_name.replace(' ', '_'), img_url.split('?')[0]))
+        self.save_data()
 
     def close(self, spider, reason):
         self.save_data()
@@ -65,7 +66,7 @@ class FixPhotosSpider(scrapy.Spider):
 
     gained_data = []
 
-    save_path = '../data/download/fix_black_images.txt'
+    save_path = '../data/download/fix_hair_brown_dark_images.txt'
 
     def save_data(self):
         self.gained_data = list(set(self.gained_data))
@@ -100,7 +101,7 @@ class FixPhotosSpider(scrapy.Spider):
         person_name = response.css('div.label h1.posl a::text').get()
 
         for img_url in imgs_urls:
-            self.gained_data.append((person_name.replace(' ', '_'), img_url.split('?')[0]))
+            self.gained_data.append((person_name.replace(' ', '_').replace('_Photos', ''), img_url.split('?')[0]))
 
         next_page = response.css('div.paging a.blue')
         if len(next_page) != 0:
@@ -114,4 +115,3 @@ class FixPhotosSpider(scrapy.Spider):
     def close(self, spider, reason):
         self.save_data()
         super(FixPhotosSpider, self).close(spider, reason)
-
